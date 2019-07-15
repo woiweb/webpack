@@ -15,26 +15,28 @@ const pwd = process.cwd();
 
 let entryMap = {}, htmls = [];
 userConfig.pages.forEach((page) => {
-    let entry = path.dirname(page.entry);
-    entryMap[entry] = path.resolve('./', page.entry);
+    let dir = path.dirname(page.src);
+    entryMap[page.entry] = path.resolve('./', page.src);
 
     htmls.push(new HtmlWebpackPlugin({
         template: path.resolve(pwd, './src/template.ejs'),
-        filename: `${entry}/${page.filename}`,
-        templateParameters: {
-            title: page.title,
-        },
+        filename: `${dir}/${page.filename}`,
+        title: page.title,
         inject: true,
-        chunks: ['vendor','common', entry]
+        chunks: ['vendor','common', page.entry]
     }))
 });
+
+
+console.log(entryMap);
 
 
 let baseConfig = {
     entry: entryMap,
     output: {
         filename: '[name].min.js',
-        path: path.resolve(__dirname, 'build'),
+        // chunkFilename: '[name].js',
+        path: path.resolve(__dirname, 'build')
     },
 
     module: {
