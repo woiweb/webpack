@@ -25,15 +25,16 @@ userConfig.pages.forEach((page) => {
         filename: `${dir}/${page.filename}`,
         title: page.title,
         inject: true,
-        chunks: ['vendor','common', page.entry]
+        chunks: ['vendor','common', page.entry],
     }))
 });
 
 let baseConfig = {
+    stats: { children: false },
     entry: entryMap,
     output: {
-        filename: '[name].min.js',
-        // chunkFilename: '[name].js',
+        filename: 'pages/[name]/index.js',
+        chunkFilename: '[name].js',
         path: path.resolve(pwd, './build')
     },
 
@@ -48,8 +49,15 @@ let baseConfig = {
                 use: ['vue-loader']
             },
             {
-                test: /\.png|jpg|gif$/,
-                use : ['file-loader']
+                test: /\.(jpg|jpeg|png|gif)$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        limit: 10240,
+                        outputPath: './images'
+                    }
+                }
             },
             {
                 test: /\.less|.css$/,
@@ -66,7 +74,29 @@ let baseConfig = {
         new VueLoaderPlugin(),
         new CleanWebpackPlugin(),
         ...htmls
-    ]
+    ],
+    optimization: {
+        usedExports: true,
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    chunks: 'all',
+                    minSize: 0,
+                    minChunks: 2, // 最少引用次数
+                    priority: 10, // 优先级
+                    name: 'vendor',
+                },
+                common: {
+                    chunks: 'all',
+                    minSize: 0,
+                    minChunks: 2,
+                    priority: 1,
+                    name: 'common',
+                }
+            }
+        }
+    }
  };
 
 
