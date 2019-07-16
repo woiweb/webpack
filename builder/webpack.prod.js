@@ -5,10 +5,28 @@
 
  const merge = require('webpack-merge');
  const baseConfig = require('./webpack.common.js');
+ const autoprefixer = require('autoprefixer');
+ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
  module.exports = merge(baseConfig, {
     mode: 'production',
+    module: {
+      rules: [{
+         test: /\.less$/,
+         use: [
+               MiniCssExtractPlugin.loader,
+               {
+                  loader: 'css-loader',
+                  options: {
+                      importLoaders: 2,
+                  }
+              },
+              'postcss-loader',
+              'less-loader'
+         ],
+      }]
+    },
     plugins: [
         
     ]

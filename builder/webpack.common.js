@@ -15,7 +15,9 @@ const pwd = process.cwd();
 
 let entryMap = {}, htmls = [];
 userConfig.pages.forEach((page) => {
-    let dir = path.dirname(page.src);
+    let dir = path.dirname(page.src).replace('src/', '');
+    console.log(dir);
+    
     entryMap[page.entry] = path.resolve('./', page.src);
 
     htmls.push(new HtmlWebpackPlugin({
@@ -27,16 +29,12 @@ userConfig.pages.forEach((page) => {
     }))
 });
 
-
-console.log(entryMap);
-
-
 let baseConfig = {
     entry: entryMap,
     output: {
         filename: '[name].min.js',
         // chunkFilename: '[name].js',
-        path: path.resolve(__dirname, 'build')
+        path: path.resolve(pwd, './build')
     },
 
     module: {
