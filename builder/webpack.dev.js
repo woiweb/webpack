@@ -14,7 +14,6 @@
     mode : 'development',
     devtool: 'cheap-eval-source-map',
     devServer: {
-        contentBase: path.resolve(pwd, './'),   
         port: 8000,
         hot: true,
         open: true

@@ -4,7 +4,6 @@
  */
 const webpack = require('webpack');
 
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); 
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -28,6 +27,21 @@ userConfig.pages.forEach((page) => {
         chunks: ['vendor','common', page.entry],
     }))
 });
+
+htmls.push(new HtmlWebpackPlugin({
+    template: path.resolve(pwd, './src/list.ejs'),
+    filename: `index.html`,
+    title: 'list',
+    inject: false,
+    minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        conservativeCollapse: true,
+        minifyCSS: true,
+        minifyJS: true,
+    },
+    ...userConfig
+}))
 
 let baseConfig = {
     stats: { children: false },
@@ -72,7 +86,6 @@ let baseConfig = {
         }),
         new webpack.ProgressPlugin(),
         new VueLoaderPlugin(),
-        new CleanWebpackPlugin(),
         ...htmls
     ],
     optimization: {
