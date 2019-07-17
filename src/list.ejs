@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <style>
+    html,body{
+        padding: 20px;
+    }
+    </style>
+</head>
+<body>
+    <h1>页面列表</h1>
+    <ul class="am-avg-md-2 am-avg-lg-3 am-thumbnails">
+    <% htmlWebpackPlugin.options.pages.forEach(function(page) { %>
+        <li>
+            <div class="am-panel am-panel-primary">
+                <div class="am-panel-bd">
+                    <a href="./pages/<%= page.entry +'/'+ page.filename %>" target="_blank"><%= page.title %></a>
+                </div>
+            </div>
+        </li>
+    <% }) %>
+    </ul>
+</body>
+</html>
