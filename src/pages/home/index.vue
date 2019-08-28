@@ -35,6 +35,10 @@ html, body {
     padding: 20px;
     border: 2px solid #ccc;
     margin: 50px;
+
+    h1{
+        display: flex;
+    }
 }
 
 </style>

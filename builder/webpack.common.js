@@ -24,7 +24,15 @@ userConfig.pages.forEach((page) => {
         filename: `${dir}/${page.filename}`,
         title: page.title,
         inject: true,
+        hash: true,
         chunks: ['vendor','common', page.entry],
+        minify: {
+            removeComments: true,
+            collapseWhitespace: true,
+            conservativeCollapse: true,
+            minifyCSS: true,
+            minifyJS: true,
+        },
     }))
 });
 

@@ -7,6 +7,7 @@
  const baseConfig = require('./webpack.common.js');
  const autoprefixer = require('autoprefixer');
  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
  const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 
@@ -30,5 +31,11 @@
     },
     plugins: [
       new CleanWebpackPlugin(),
-    ]
+    ],
+
+    optimization: {
+      // minimizer: [
+         //  new OptimizeCSSAssetsPlugin({}),
+      // ],
+   }
  });
